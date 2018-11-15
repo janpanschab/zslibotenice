@@ -1,0 +1,51 @@
+{
+  "name": "zslibotenice",
+  "version": "1.0.0",
+  "description": "Web ZŠ Libotenice",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "analyze": "cross-env ANALYZE=1 next build",
+    "flow": "flow",
+    "prettier": "prettier --write '**/*.{js,md}'",
+    "eslint": "NODE_ENV=production eslint .",
+    "test": "yarn eslint && yarn flow",
+    "clean-babel-cache": "rimraf node_modules/.cache/babel-loader",
+    "relay": "relay-compiler --src ./ --exclude '**/.next/**' '**/node_modules/**' '**/test/**'  '**/__generated__/**' --exclude './schema/**' --schema ./schema/schema.graphql",
+    "schema": "graphql get-schema dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "dotenv-webpack": "^1.5.7",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^7.0.2",
+    "path-match": "^1.2.4",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-relay": "^1.6.2",
+    "relay-runtime": "^1.6.2",
+    "styled-components": "^4.0.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-relay": "^1.6.2",
+    "babel-plugin-styled-components": "^1.8.0",
+    "babel-polyfill": "^6.26.0",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "graphql-cli": "^2.16.5",
+    "prettier": "^1.14.2",
+    "relay-compiler": "^1.6.2",
+    "rimraf": "^2.6.2"
+  }
+}

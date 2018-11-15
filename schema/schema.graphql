@@ -1,0 +1,446 @@
+# source: https://graphql.datocms.com/
+# timestamp: Sun Oct 28 2018 18:13:01 GMT+0100 (Středoevropský standardní čas)
+
+"""Represents `true` or `false` values."""
+scalar BooleanType
+
+type CollectionMetadata {
+  count: IntType!
+}
+
+scalar Date
+
+"""Specifies how to filter Date fields"""
+input DateFilter {
+  """
+  Filter records with a value that's strictly greater than the one specified
+  """
+  gt: Date
+
+  """Filter records with a value that's less than the one specified"""
+  lt: Date
+
+  """
+  Filter records with a value that's greater than or equal to the one specified
+  """
+  gte: Date
+
+  """
+  Filter records with a value that's less or equal than the one specified
+  """
+  lte: Date
+
+  """
+  Filter records with the specified field defined (i.e. with any value) or not
+  """
+  exists: BooleanType
+
+  """Search for records with an exact match"""
+  eq: Date
+
+  """Exclude records with an exact match"""
+  neq: Date
+}
+
+scalar DateTime
+
+"""Specifies how to filter DateTime fields"""
+input DateTimeFilter {
+  """
+  Filter records with a value that's strictly greater than the one specified
+  """
+  gt: DateTime
+
+  """Filter records with a value that's less than the one specified"""
+  lt: DateTime
+
+  """
+  Filter records with a value that's greater than or equal to than the one specified
+  """
+  gte: DateTime
+
+  """
+  Filter records with a value that's less or equal than the one specified
+  """
+  lte: DateTime
+
+  """
+  Filter records with the specified field defined (i.e. with any value) or not
+  """
+  exists: BooleanType
+
+  """Search for records with an exact match"""
+  eq: DateTime
+
+  """Exclude records with an exact match"""
+  neq: DateTime
+}
+
+scalar DocHintsField
+
+enum FaviconType {
+  icon
+  appleTouchIcon
+  msApplication
+}
+
+type FileField {
+  alt: String
+  format: String!
+  height: IntType
+  id: UploadId!
+  size: IntType!
+  title: String
+  url: String
+  width: IntType
+}
+
+type GlobalSeoField {
+  facebookPageUrl: String
+  fallbackSeo: SeoField
+  siteName: String
+  titleSuffix: String
+  twitterAccount: String
+}
+
+"""Specifies how to filter by ID"""
+input IdFilter {
+  """Search the record with the specified ID"""
+  eq: ItemId
+
+  """Exclude the record with the specified ID"""
+  neq: ItemId
+
+  """Search records with the specified IDs"""
+  in: [ItemId]
+}
+
+"""
+Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+"""
+scalar IntType
+
+scalar ItemId
+
+enum ItemStatus {
+  draft
+  updated
+  published
+}
+
+scalar MetaTagAttributes
+
+input NewsModelFilter {
+  OR: [NewsModelFilter]
+  id: IdFilter
+  updatedAt: DateTimeFilter
+  createdAt: DateTimeFilter
+  position: PositionFilter
+  status: StatusFilter
+  published: DateFilter
+  url: SlugFilter
+  title: StringFilter
+  text: TextFilter
+}
+
+enum NewsModelOrderBy {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+  position_ASC
+  position_DESC
+  status_ASC
+  status_DESC
+  published_ASC
+  published_DESC
+  title_ASC
+  title_DESC
+}
+
+"""Record of type News (news)"""
+type NewsRecord {
+  _modelApiKey: String!
+
+  """SEO meta tags"""
+  _seoMetaTags(
+    """The locale to use to fetch the field's content"""
+    locale: SiteLocale
+  ): [Tag]
+  id: ID!
+  position: IntType!
+  published: Date
+  text(
+    """Process content as markdown"""
+    markdown: Boolean
+  ): String
+  title: String
+  updatedAt: DateTime!
+  url: String
+}
+
+input PageModelFilter {
+  OR: [PageModelFilter]
+  id: IdFilter
+  updatedAt: DateTimeFilter
+  createdAt: DateTimeFilter
+  position: PositionFilter
+  status: StatusFilter
+  text: TextFilter
+  url: SlugFilter
+  title: StringFilter
+}
+
+enum PageModelOrderBy {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+  position_ASC
+  position_DESC
+  status_ASC
+  status_DESC
+  title_ASC
+  title_DESC
+}
+
+"""Record of type Page (page)"""
+type PageRecord {
+  _modelApiKey: String!
+
+  """SEO meta tags"""
+  _seoMetaTags(
+    """The locale to use to fetch the field's content"""
+    locale: SiteLocale
+  ): [Tag]
+  id: ID!
+  position: IntType!
+  text(
+    """Process content as markdown"""
+    markdown: Boolean
+  ): String
+  title: String
+  updatedAt: DateTime!
+  url: String
+}
+
+"""
+Specifies how to filter by position (sorted and tree-like collections)
+"""
+input PositionFilter {
+  """
+  Filter records with a value that's strictly greater than the one specified
+  """
+  gt: IntType
+
+  """Filter records with a value that's less than the one specified"""
+  lt: IntType
+
+  """
+  Filter records with a value that's greater than or equal to the one specified
+  """
+  gte: IntType
+
+  """
+  Filter records with a value that's less or equal than the one specified
+  """
+  lte: IntType
+
+  """Search for records with an exact match"""
+  eq: IntType
+
+  """Exclude records with an exact match"""
+  neq: IntType
+}
+
+"""The query root for this schema"""
+type Query {
+  """Returns meta information regarding a record collection"""
+  _allNewsMeta(
+    """Filter the collection"""
+    filter: NewsModelFilter
+
+    """The locale to use to fetch content"""
+    locale: SiteLocale = en
+  ): CollectionMetadata
+
+  """Returns meta information regarding a record collection"""
+  _allPagesMeta(
+    """Filter the collection"""
+    filter: PageModelFilter
+
+    """The locale to use to fetch content"""
+    locale: SiteLocale = en
+  ): CollectionMetadata
+
+  """Returns the single instance record"""
+  _site(
+    """The locale to use to fetch content"""
+    locale: SiteLocale = en
+  ): Site
+
+  """Returns a collection of records"""
+  allNews(
+    """Limit the number of results"""
+    first: IntType = 20
+
+    """Skip the first results"""
+    skip: IntType = 0
+
+    """Filter the collection"""
+    filter: NewsModelFilter
+
+    """Order the collection"""
+    orderBy: [NewsModelOrderBy]
+
+    """The locale to use to fetch content"""
+    locale: SiteLocale = en
+  ): [NewsRecord]
+
+  """Returns a collection of records"""
+  allPages(
+    """Limit the number of results"""
+    first: IntType = 20
+
+    """Skip the first results"""
+    skip: IntType = 0
+
+    """Filter the collection"""
+    filter: PageModelFilter
+
+    """Order the collection"""
+    orderBy: [PageModelOrderBy]
+
+    """The locale to use to fetch content"""
+    locale: SiteLocale = en
+  ): [PageRecord]
+
+  """Returns a specific record"""
+  news(
+    """Filter the collection"""
+    filter: NewsModelFilter
+
+    """Order the collection"""
+    orderBy: [NewsModelOrderBy]
+
+    """The locale to use to fetch content"""
+    locale: SiteLocale = en
+  ): NewsRecord
+
+  """Returns a specific record"""
+  page(
+    """Filter the collection"""
+    filter: PageModelFilter
+
+    """Order the collection"""
+    orderBy: [PageModelOrderBy]
+
+    """The locale to use to fetch content"""
+    locale: SiteLocale = en
+  ): PageRecord
+}
+
+type SeoField {
+  description: String
+  image: FileField
+  title: String
+}
+
+type Site {
+  favicon: FileField
+  faviconMetaTags(
+    """The variants to build"""
+    variants: [FaviconType]
+  ): [Tag]
+  globalSeo(
+    """The locale to use to fetch content"""
+    locale: SiteLocale = en
+  ): GlobalSeoField
+}
+
+enum SiteLocale {
+  en
+}
+
+"""Specifies how to filter Slug fields"""
+input SlugFilter {
+  """Search for records with an exact match"""
+  eq: String
+
+  """Exclude records with an exact match"""
+  neq: String
+
+  """Filter records that have one of the specified slugs"""
+  in: [String]
+}
+
+"""Specifies how to filter by status"""
+input StatusFilter {
+  """Search the record with the specified status"""
+  eq: ItemStatus
+
+  """Exclude the record with the specified status"""
+  neq: ItemStatus
+
+  """Search records with the specified statuses"""
+  in: [ItemStatus]
+}
+
+"""Specifies how to filter Single-line string fields"""
+input StringFilter {
+  """Filter records based on a regular expression"""
+  matches: StringMatchesFilter
+
+  """Exclude records based on a regular expression"""
+  notMatches: StringMatchesFilter
+
+  """
+  Filter records with the specified field defined (i.e. with any value) or not
+  """
+  exists: BooleanType
+
+  """Search for records with an exact match"""
+  eq: String
+
+  """Exclude records with an exact match"""
+  neq: String
+
+  """Filter records that have one of the specified values"""
+  in: [String]
+}
+
+input StringMatchesFilter {
+  pattern: String!
+  caseSensitive: BooleanType = false
+}
+
+type Tag {
+  attributes: MetaTagAttributes
+  content: String
+  tag: String!
+}
+
+"""Specifies how to filter text fields"""
+input TextFilter {
+  """Filter records based on a regular expression"""
+  matches: TextMatchesFilter
+
+  """Exclude records based on a regular expression"""
+  notMatches: TextMatchesFilter
+
+  """
+  Filter records with the specified field defined (i.e. with any value) or not
+  """
+  exists: BooleanType
+}
+
+input TextMatchesFilter {
+  pattern: String!
+  caseSensitive: BooleanType = false
+}
+
+scalar UploadId
