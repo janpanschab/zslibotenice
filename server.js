@@ -6,8 +6,8 @@ const next = require('next');
 const pathMatch = require('path-match');
 
 const dev = process.env.NODE_ENV !== 'production';
-// const port = parseInt(process.env.PORT, 10) || 3000;
-const port = dev ? 8000 : 3000;
+const prodPort = parseInt(process.env.PORT, 10) || 3000;
+const port = dev ? 8000 : prodPort;
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const route = pathMatch();
