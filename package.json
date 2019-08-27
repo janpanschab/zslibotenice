@@ -27,7 +27,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-relay": "^1.6.2",
+    "react-relay": "^5.0.0",
     "relay-runtime": "^1.6.2",
     "styled-components": "^4.0.2"
   },
