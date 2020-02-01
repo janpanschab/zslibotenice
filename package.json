@@ -46,6 +46,6 @@
     "graphql-cli": "^2.16.5",
     "prettier": "^1.14.2",
     "relay-compiler": "^1.6.2",
-    "rimraf": "^2.6.2"
+    "rimraf": "^3.0.1"
   }
 }
